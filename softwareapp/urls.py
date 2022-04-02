@@ -310,6 +310,13 @@ urlpatterns = [
     path('manager_trainer_unsolvedissue/', training_views.manager_trainer_unsolvedissue, name='manager_trainer_unsolvedissue'),
     path('savetmreplaytrnr/<int:id>', training_views.savetmreplaytrnr, name='savetmreplaytrnr'),
     path('manager_trainer_solvedissue/', training_views.manager_trainer_solvedissue, name='manager_trainer_solvedissue'),
+
+    path('manager_accountsreportissue/', training_views.manager_accountsreportissue, name='manager_accountsreportissue'),
+    path('manager_accounts_unsolvedissue/', training_views.manager_accounts_unsolvedissue, name='manager_accounts_unsolvedissue'),
+    path('savetmreplyaccounts/<int:id>', training_views.savetmreplyaccounts, name='savetmreplyaccounts'),
+    path('manager_accounts_solvedissue/', training_views.manager_accounts_solvedissue, name='manager_accounts_solvedissue'),
+
+
     path('manager_traineereportissue/', training_views.manager_traineereportissue, name='manager_traineereportissue'),
     path('manager_trainee_unsolvedissue/', training_views.manager_trainee_unsolvedissue, name='manager_trainee_unsolvedissue'),
     path('savetmreplytrns/<int:id>', training_views.savetmreplytrns, name='savetmreplytrns'),

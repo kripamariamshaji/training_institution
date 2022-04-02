@@ -594,6 +594,78 @@ def manager_trainer_solvedissue(request):
     else:
         return redirect('/')
 
+def manager_accountsreportissue(request):
+    if 'm_id' in request.session:
+        if request.session.has_key('m_designation_id'):
+            m_designation_id = request.session['m_designation_id']
+        if request.session.has_key('m_fullname'):
+            m_fullname = request.session['m_fullname']
+        else:
+            m_fullname = "dummy"
+        mem = user_registration.objects.filter(
+            designation_id=m_designation_id) .filter(fullname=m_fullname)
+        return render(request, 'software_training/training/manager/manager_accountsreportissue.html', {'mem': mem})
+    else:
+        return redirect('/')
+
+def manager_accounts_unsolvedissue(request):
+    if 'm_id' in request.session:
+        if request.session.has_key('m_designation_id'):
+            m_designation_id = request.session['m_designation_id']
+        if request.session.has_key('m_fullname'):
+            m_fullname = request.session['m_fullname']
+        if request.session.has_key('m_id'):
+            m_id = request.session['m_id']
+        else:
+            m_fullname = "dummy"
+        mem = user_registration.objects.filter(
+            designation_id=m_designation_id) .filter(fullname=m_fullname)
+        des = designation.objects.get(designation_name='accounts')
+        cut = reported_issue.objects.filter(reported_issue_reported_to_id=m_id).filter(reported_issue_designation_id_id=des.id).filter(reported_issue_issuestatus=0).order_by('-id')
+        context = {'cut': cut, 'vars': vars, 'mem': mem}
+        return render(request,'software_training/training/manager/manager_accounts_unsolvedissue.html', context)
+    else:
+        return redirect('/')
+
+def savetmreplyaccounts(request, id):
+    if 'm_id' in request.session:
+        if request.session.has_key('m_designation_id'):
+            m_designation_id = request.session['m_designation_id']
+        if request.session.has_key('m_fullname'):
+            m_fullname = request.session['m_fullname']
+        else:
+            m_fullname = "dummy"
+        mem = user_registration.objects.filter(
+            designation_id=m_designation_id) .filter(fullname=m_fullname)
+        vars = reported_issue.objects.get(id=id)
+        if request.method == 'POST':
+            vars.reported_issue_reply = request.POST['review']
+            vars.reported_issue_issuestatus = 1
+            vars.save()
+        return redirect('manager_accountsreportissue')
+    else:
+        return redirect('/')
+
+def manager_accounts_solvedissue(request):
+    if 'm_id' in request.session:
+        if request.session.has_key('m_designation_id'):
+            m_designation_id = request.session['m_designation_id']
+        if request.session.has_key('m_fullname'):
+            m_fullname = request.session['m_fullname']
+        if request.session.has_key('m_id'):
+            m_id = request.session['m_id']
+        else:
+            m_fullname = "dummy"
+        mem = user_registration.objects.filter(
+            designation_id=m_designation_id) .filter(fullname=m_fullname)
+        des = designation.objects.get(designation_name='accounts')
+        print(des.id)
+        cut = reported_issue.objects.filter(reported_issue_reported_to_id=m_id).filter(reported_issue_designation_id_id=des.id).filter(reported_issue_issuestatus=1).order_by('-id')
+        context = {'cut': cut, 'vars': vars, 'mem': mem}
+        return render(request,'software_training/training/manager/manager_accounts_solvedissue.html',context)
+    else:
+        return redirect('/')
+
 def manager_traineereportissue(request):
     if 'm_id' in request.session:
         if request.session.has_key('m_designation_id'):
